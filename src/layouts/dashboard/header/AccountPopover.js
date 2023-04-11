@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { alpha } from '@mui/material/styles';
 import { Box, Divider, Typography, Stack, MenuItem, Avatar, IconButton, Popover } from '@mui/material';
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link ,useNavigate} from "react-router-dom";
 import { logout } from "../../../actions/userActions";
 import { toast } from "react-toastify";
 // mocks_
@@ -45,9 +45,13 @@ export default function AccountPopover() {
   const { user, loading } = useSelector((state) => state.auth);
   const [open, setOpen] = useState(null);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const logoutHandler = () => {
     dispatch(logout());
+
+    navigate('/shop')
+   
 
     notify("Logged Out Successfully");
   };
@@ -137,7 +141,7 @@ export default function AccountPopover() {
                   {user ? (
                    <>
 
-                    <MenuItem  key="order" component={Link} to="/orders" >
+                    <MenuItem  key="order" component={Link} to="/me/orders" >
                     Order
                     </MenuItem> 
 

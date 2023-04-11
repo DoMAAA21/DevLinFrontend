@@ -29,8 +29,11 @@ import Payment from './views/cart/payment';
 import OrderSuccess from './views/cart/orderSuccess.js';
 import store from "./store";
 import LoginPage from './views/auth/LoginPage';
+import RegisterPage from './views/auth/RegisterPage';
 import Profile from './views/auth/Profile';
 import UpdateProfile from './views/auth/UpdateProfile';
+import ListOrders from './views/auth/MyOrders';
+import OrderDetails from "./views/auth/OrderDetails";
 // ----------------------------------------------------------------------
 
 export default function Router() {
@@ -60,6 +63,8 @@ export default function Router() {
         { path: 'success', element: <OrderSuccess /> },
         { path: 'me', element: <Profile /> },
         { path: 'me/update', element: <UpdateProfile /> },
+        { path: 'me/orders', element: <ListOrders /> },
+        { path: 'order/:id', element: <OrderDetails /> },
      
 
       ],
@@ -71,7 +76,7 @@ export default function Router() {
         { element: <Navigate to="shop" />, exact: true },
         { path: 'app', element: <DashboardAppPage /> },
         { path: 'user', element: <UserPage /> },
-        { path: 'blog', element: <UsersList /> },
+        { path: 'blog', element: <BlogPage /> },
         { path: 'users', element: <UsersList />,exact: "true" },
         { path: 'adduser', element: <AddUser />,exact: "true" },
         { path: 'updateuser/:id', element: <UpdateUser />,exact: "true" },
@@ -85,6 +90,10 @@ export default function Router() {
     {
       path: 'login',
       element: <LoginPage />,
+    },
+    {
+      path: 'register',
+      element: <RegisterPage />,
     },
    
 

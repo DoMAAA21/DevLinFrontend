@@ -302,7 +302,6 @@ export const login = (email, password) => async (dispatch) => {
     console.log(data)
     // cookies.set('token', data.token, { path: '/' });
     cookies.set('userid', data.user._id, { path: '/' });
-    
 
     localStorage.setItem("user",JSON.stringify(data.user));
     dispatch({
@@ -324,6 +323,30 @@ export const login = (email, password) => async (dispatch) => {
   }
 };
 
+export const register = (userData) => async (dispatch) => {
+  try {
+      dispatch({ type: REGISTER_USER_REQUEST })
+      const config = {
+          headers: {
+              'Content-Type': 'multipart/form-data'
+          }
+      }
+      const { data } = await axios.post(`${process.env.REACT_APP_API}/api/v1/register`, userData,   {withCredentials:true},config)
+
+      const cookies = new Cookies();
+      cookies.set('userid', data.user._id, { path: '/' });
+      localStorage.setItem("user",JSON.stringify(data.user));
+      dispatch({
+          type: REGISTER_USER_SUCCESS,
+          payload: data.user
+      })
+  } catch (error) {
+      dispatch({
+          type: REGISTER_USER_FAIL,
+          payload: error.response.data.message
+      })
+  }
+}
 
 
 
@@ -400,7 +423,7 @@ export const loadUser = () => async (dispatch) => {
 
     const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/me`,{withCredentials: true});
     
-    localStorage.setItem("user",JSON.stringify(data.user));
+    
 
     dispatch({
       type: LOAD_USER_SUCCESS,
@@ -478,3 +501,4 @@ export const updatePassword = (passwords) => async (dispatch) => {
     });
   }
 };
+

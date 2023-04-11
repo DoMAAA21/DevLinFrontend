@@ -11,11 +11,13 @@ import Logo from '../../components/logo';
 import Iconify from '../../components/iconify';
 // sections
 // import { LoginForm } from '../../sections/auth/login';
-import { LoginForm } from './Login';
+// import { Lo } from './Login';
+import {Register} from './RegisterPage';
 // import { GoogleLog } from './GoogleLogin';
 import { googleLogout, useGoogleLogin } from '@react-oauth/google';
 import { googlelogin } from 'src/actions/userActions';
 import { useDispatch, useSelector } from "react-redux";
+import RegisterForm from './Register/RegisterForm';
 // ----------------------------------------------------------------------
 
 const StyledRoot = styled('div')(({ theme }) => ({
@@ -46,7 +48,7 @@ const StyledContent = styled('div')(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-export default function LoginPage() {
+export default function RegisterPage() {
 
   const [ user, setUser ] = useState([]);
     const [ profile, setProfile ] = useState([]);
@@ -91,7 +93,7 @@ export default function LoginPage() {
   return (
     <>
       <Helmet>
-        <title> Login | DevLin </title>
+        <title> Register | DevLin </title>
       </Helmet>
 
       <StyledRoot>
@@ -115,12 +117,13 @@ export default function LoginPage() {
         <Container maxWidth="sm">
           <StyledContent>
             <Typography variant="h4" gutterBottom>
-              Sign in to DevLin
+              Register to DevLin
             </Typography>
 
             <Typography variant="body2" sx={{ mb: 5 }}>
-              Don’t have an account? {''}
-              <Link variant="subtitle2">Get started</Link>
+             Already have an account? {''}
+              <Link to="login" >Go to Login</Link>
+            
             </Typography>
 
             <Stack direction="row" spacing={2}>
@@ -138,7 +141,7 @@ export default function LoginPage() {
               </Typography>
             </Divider>
 
-            <LoginForm />
+            <RegisterForm />
           </StyledContent>
         </Container>
       </StyledRoot>
