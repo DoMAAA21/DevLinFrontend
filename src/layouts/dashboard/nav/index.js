@@ -14,6 +14,9 @@ import Scrollbar from '../../../components/scrollbar';
 import NavSection from '../../../components/nav-section';
 //
 import navConfig from './config';
+import { useDispatch, useSelector } from 'react-redux'
+
+// import { logout } from '../../../actions/userActions'
 
 // ----------------------------------------------------------------------
 
@@ -38,6 +41,7 @@ export default function Nav({ openNav, onCloseNav }) {
   const { pathname } = useLocation();
 
   const isDesktop = useResponsive('up', 'lg');
+  const { user, loading } = useSelector(state => state.auth)
 
   useEffect(() => {
     if (openNav) {
@@ -60,15 +64,15 @@ export default function Nav({ openNav, onCloseNav }) {
       <Box sx={{ mb: 5, mx: 2.5 }}>
         <Link underline="none">
           <StyledAccount>
-            <Avatar src={account.photoURL} alt="photoURL" />
+            <Avatar src={user.avatar && user.avatar.url} alt="photoURL" />
 
             <Box sx={{ ml: 2 }}>
               <Typography variant="subtitle2" sx={{ color: 'text.primary' }}>
-                {account.displayName}
+              {user && user.name}
               </Typography>
 
               <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                {account.role}
+                Admin
               </Typography>
             </Box>
           </StyledAccount>

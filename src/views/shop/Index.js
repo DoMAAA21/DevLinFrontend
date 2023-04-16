@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useState } from "react";
-// import MetaData from "./layout/MetaData";
+import MetaData from "../layouts/MetaData";
 import Product from "./Product";
 import Loader from "../layouts/Loader";
 import { useParams } from "react-router-dom";
@@ -76,7 +76,7 @@ const Home = ({ match }) => {
         <Loader />
       ) : (
         <Fragment>
-          {/* <MetaData title={"Buy Best Products Online"} /> */}
+          <MetaData title={"Devlin Shop"} />
           <h1 id="products_heading">Our Products</h1>
           <section id="products" className="container mt-5">
             {/* <div className="row">

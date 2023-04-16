@@ -114,9 +114,9 @@ const Payment = () => {
 
 
         dispatch(createOrder(order))
-        dispatch(clearCart())
-        localStorage.clear();
-        sessionStorage.clear();
+        // dispatch(clearCart())
+        localStorage.removeItem('cartItems');
+        // sessionStorage.clear();
         navigate('/success')
 
 

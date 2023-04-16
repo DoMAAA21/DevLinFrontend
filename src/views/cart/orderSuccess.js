@@ -4,7 +4,8 @@ import { Link } from 'react-router-dom'
 
 import MetaData from '../layouts/MetaData'
 
-
+import Receipt from './Receipt';
+import { PDFDownloadLink } from "@react-pdf/renderer";
 
 const OrderSuccess = () => {
 
@@ -30,9 +31,12 @@ const OrderSuccess = () => {
 
 
 
-                    <Link to="/orders/me">Go to Orders</Link>
+                    <Link to="/me/orders">Go to Orders</Link>
 
                 </div>
+                <PDFDownloadLink document={<Receipt />} filename="FORM">
+      {({loading}) => (loading ? <button>Loading Document...</button> : <button>Download</button> )}
+      </PDFDownloadLink>
 
 
 

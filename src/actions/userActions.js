@@ -222,12 +222,12 @@ export const allUsers = () => async (dispatch) => {
 
   export const updateUser = (id, userData) => async (dispatch) => {
 
-    for (var [key, value] of userData.entries()) { 
-            console.log(key, value);
-           }
+    // for (var [key, value] of userData.entries()) { 
+    //         console.log(key, value);
+    //        }
 
 
-    // try {
+    try {
   
   
   
@@ -263,17 +263,17 @@ export const allUsers = () => async (dispatch) => {
   
   
   
-    // } catch (error) {
+    } catch (error) {
   
-    //     dispatch({
+        dispatch({
   
-    //         type: UPDATE_USER_FAIL,
+            type: UPDATE_USER_FAIL,
   
-    //         payload: error.response.data.message
+            payload: error.response.data.message
   
-    //     })
+        })
   
-    // }
+    }
   
   }
 

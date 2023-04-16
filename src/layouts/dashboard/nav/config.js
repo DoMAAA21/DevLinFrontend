@@ -14,7 +14,7 @@ const navConfig = [
   {
     title: 'userlist',
     path: '/dashboard/users',
-    icon: icon('ic_analytics'),
+    icon: icon('ic_user'),
   },
   {
     title: 'user',

@@ -1,13 +1,16 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-
+import { ReactSearchAutocomplete } from 'react-search-autocomplete'
+import axios from "axios";
 // @mui
 import { styled } from '@mui/material/styles';
-import { Input, Slide, Button, IconButton, InputAdornment, ClickAwayListener,TextField } from '@mui/material';
+import { Input, Slide, Button, IconButton, InputAdornment, ClickAwayListener,TextField,Autocomplete } from '@mui/material';
 // utils
 import { bgBlur } from '../../../utils/cssStyles';
 // component
 import Iconify from '../../../components/iconify';
+import '../../../App.css'
+
 const Search = () => {
   const [keyword, setKeyword] = useState("");
   let navigate = useNavigate();
@@ -17,12 +20,14 @@ const HEADER_DESKTOP = 92;
   const searchHandler = (e) => {
     e.preventDefault();
 
-    if (keyword.trim()) {
-      navigate(`/search/${keyword}`);
+    if (text.trim()) {
+      navigate(`/search/${text}`);
     } else {
       navigate("/shop");
     }
   };
+
+
 
   const StyledSearchbar = styled('div')(({ theme }) => ({
     ...bgBlur({ color: theme.palette.background.default }),
@@ -52,12 +57,61 @@ const HEADER_DESKTOP = 92;
   const handleClose = () => {
     setOpen(false);
   };
+
+
+  const [users, setUsers] = useState([])
+  const [text,setText] = useState('')
+  const [suggestions,setSuggestions] = useState([])
+  useEffect(()=>{
+
+
+    const loadUsers = async()=>{
+      const response = await axios.get(`${process.env.REACT_APP_API}/api/v1/products`)
+       console.log(response.data.products)
+      setUsers(response.data.products)
+    }
+
+    loadUsers();
+  },[])
+
+const  onChangeHandler = (text) =>
+  {
+    let matches =[]
+    if(text.length>0)
+    {
+      matches =users.filter(user=>{
+
+        const regex = new RegExp(`${text}`,"gi")
+        return user.name.match(regex)
+      })
+    }
+    console.log('matches',matches)
+    setSuggestions(matches)
+    setText(text)
+  }
+
+ const onSuggestHandler = (text) =>
+ {
+  setText(text)
+  setSuggestions([])
+ }
+
+ 
+  
+
+
+ 
+
   return (
     
 
-
     <ClickAwayListener onClickAway={handleClose}>
     <div>
+    <link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+/>
+
       {!open && (
         <IconButton onClick={handleOpen}>
           <Iconify icon="eva:search-fill" />
@@ -66,25 +120,33 @@ const HEADER_DESKTOP = 92;
 
       <Slide direction="down" in={open} mountOnEnter unmountOnExit>
       <form onSubmit={searchHandler}>
-        <StyledSearchbar>
+        {/* <StyledSearchbar> */}
           <Input
-            autoFocus
-            fullWidth
-            disableUnderline
+          className="form-group col-md-6"
+
             placeholder="Search…"
-            onChange={(e) => setKeyword(e.target.value)}
-            value ={keyword}
-            startAdornment={
-              <InputAdornment position="start">
-                <Iconify icon="eva:search-fill" sx={{ color: 'text.disabled', width: 20, height: 20 }} />
-              </InputAdornment>
-            }
+            onChange={(e) => onChangeHandler(e.target.value)}
+            value ={text}
             sx={{ mr: 1, fontWeight: 'fontWeightBold' }}
+          
           />
+          
+
+
+
+
+
+
+
           <Button variant="contained" type="submit">
             Search
           </Button>
-        </StyledSearchbar>
+
+          {suggestions && suggestions.map((suggestion,i)=>
+          <div key={i} className="suggestion text-dark col-md-6 justify-content-md-center" onClick={()=>onSuggestHandler(suggestion.name)}>{suggestion.name}</div>
+          
+          )}
+        {/* </StyledSearchbar> */}
         </form>
       </Slide>
     </div>

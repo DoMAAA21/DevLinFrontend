@@ -1,17 +1,12 @@
 import React, { Fragment, useState, useEffect } from 'react'
-
 import { useNavigate } from 'react-router-dom'
-
 import { toast } from 'react-toastify';
-
 import 'react-toastify/dist/ReactToastify.css';
-
-import {TextField, Button,Select,InputLabel,MenuItem} from "@mui/material";
-
+import {TextField, Button,Select,InputLabel,MenuItem,Box} from "@mui/material";
+import { useForm } from "react-hook-form";
+import MetaData from '../layouts/MetaData'
 import { useDispatch, useSelector } from 'react-redux'
-
 import { newProduct, clearErrors } from '../../actions/productActions'
-
 import { NEW_PRODUCT_RESET } from '../../constants/productConstants'
 
 const notifys = (message = "") =>
@@ -69,6 +64,27 @@ const AddProduct = () => {
 
     const { loading, error, success } = useSelector(state => state.newProduct);
 
+    const {
+        register,
+        handleSubmit,
+        setValue,
+        formState: { errors }
+      } = useForm(
+        { mode:"onChange",
+         defaultValues:
+         {
+          name: name,
+          price: price,
+          description : description,
+          category : category,
+          stock : stock,
+          seller : seller,
+  
+         }
+  
+        }
+      );
+
     const message = (message = '') => toast.success(message, {
 
         position: toast.POSITION.BOTTOM_CENTER
@@ -101,27 +117,24 @@ const AddProduct = () => {
 
 
 
-    const submitHandler = (e) => {
+    const submitHandler = (data) => {
 
-        e.preventDefault();
-
+        
 
 
         const formData = new FormData();
 
-        formData.set('name', name);
+        formData.set('name',data.name);
 
-        formData.set('price', price);
+        formData.set('price', data.price);
 
-        formData.set('description', description);
+        formData.set('description', data.description);
 
-        formData.set('category', category);
+        formData.set('category', data.category);
 
-        formData.set('stock', stock);
+        formData.set('stock', data.stock);
 
-        formData.set('seller', seller);
-
-
+        formData.set('seller', data.seller);
 
         images.forEach(image => {
 
@@ -129,10 +142,6 @@ const AddProduct = () => {
 
         })
 
-
-        // for (var [key, value] of formData.entries()) { 
-        //     console.log(key, value);
-        //    }
         dispatch(newProduct(formData))
 
     }
@@ -171,7 +180,8 @@ const AddProduct = () => {
 
 
         <React.Fragment>
-        <form onSubmit={submitHandler} encType='multipart/form-data'>
+            <MetaData title={"Add Product"} />
+        <form onSubmit={handleSubmit(submitHandler)} encType='multipart/form-data'>
             <h2>Add Product</h2>
                 <TextField 
                     label="Name"
@@ -181,10 +191,13 @@ const AddProduct = () => {
                     color="secondary"
                     type="text"
                     onChange={e => setName(e.target.value)}
-                    value={name}
                     sx={{mb: 3}}
                     fullWidth
+                    {...register("name", {
+                        required: "Name is required."
+                      })}
                  />
+                 {errors.name && <Box component="div" sx={{ display: 'block' , color:'red' }}>{errors.name.message}</Box>}
                   <TextField 
                     label="Price"
                     name="price"
@@ -193,10 +206,14 @@ const AddProduct = () => {
                     color="secondary"
                     type="number"
                     onChange={e => setPrice(e.target.value)}
-                    value={price}
+                 
                     sx={{mb: 3}}
                     fullWidth
+                    {...register("price", {
+                        required: "Price is required."
+                      })}
                  />
+                 {errors.price && <Box component="div" sx={{ display: 'block' , color:'red' }}>{errors.price.message}</Box>}
                  <TextField 
                     label="Description"
                     name="description"
@@ -205,22 +222,27 @@ const AddProduct = () => {
                     color="secondary"
                     type="text"
                     onChange={e => setDescription(e.target.value)}
-                    value={description}
                     fullWidth
                     sx={{mb: 3}}
+                    {...register("description", {
+                        required: "Description is required."
+                      })}
                  />
+                  {errors.description && <Box component="div" sx={{ display: 'block' , color:'red' }}>{errors.description.message}</Box>}
 
                 <InputLabel >Category</InputLabel>
                 <Select
                 label="Category"
                 name="category" 
                 required 
-                    value={category}
                     variant="outlined"
                     color="primary"
                     onChange={e => setCategory(e.target.value)}
                     fullWidth         
                     sx={{mb: 3}}
+                    {...register("category", {
+                        required: "Category is required."
+                      })}
                 >
 
                     {categories.map(category => (
@@ -230,6 +252,7 @@ const AddProduct = () => {
 
                     ))}
                 </Select>
+                {errors.category && <Box component="div" sx={{ display: 'block' , color:'red' }}>{errors.category.message}</Box>}
 
                 <TextField 
                     label="Stock"
@@ -239,11 +262,13 @@ const AddProduct = () => {
                     color="secondary"
                     type="number"
                     onChange={e => setStock(e.target.value)}
-                    value={stock}
                     fullWidth
                     sx={{mb: 3}}
+                    {...register("stock", {
+                        required: "Stock is required."
+                      })}
                  />
-
+                 {errors.stock && <Box component="div" sx={{ display: 'block' , color:'red' }}>{errors.stock.message}</Box>}
                  
                 <TextField 
                     label="Seller"
@@ -253,10 +278,14 @@ const AddProduct = () => {
                     color="secondary"
                     type="text"
                     onChange={e => setSeller(e.target.value)}
-                    value={seller}
                     fullWidth
                     sx={{mb: 3}}
+                    {...register("seller", {
+                        required: "Description is required."
+                      })}
                  />
+
+                {errors.seller && <Box component="div" sx={{ display: 'block' , color:'red' }}>{errors.seller.message}</Box>}
                  
 
                  

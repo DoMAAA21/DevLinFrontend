@@ -51,7 +51,6 @@ export default function AccountPopover() {
     dispatch(logout());
 
     navigate('/shop')
-   
 
     notify("Logged Out Successfully");
   };
@@ -86,7 +85,13 @@ export default function AccountPopover() {
           }),
         }}
       >
-        <Avatar src={account.photoURL} alt="photoURL" />
+        {user ? (
+        <Avatar src={user.avatar && user.avatar.url} alt="photoURL" />
+        ) : (
+          (
+            <Avatar src={account.photoURL} alt="photoURL" />
+            )
+            )}
       </IconButton>
 
       <Popover
@@ -120,11 +125,7 @@ export default function AccountPopover() {
         <Divider sx={{ borderStyle: 'dashed' }} />
 
         <Stack sx={{ p: 1 }}>
-          {/* {MENU_OPTIONS.map((option) => (
-            <MenuItem key={option.label} onClick={handleClose}>
-              {option.label}
-            </MenuItem>
-          ))} */}
+         
 
           {user && user.role === "admin" && (
                         

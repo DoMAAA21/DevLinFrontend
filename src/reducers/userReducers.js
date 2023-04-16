@@ -122,11 +122,22 @@ import {
   
   }
 
-  export const newUserReducer = (state = { product: {} }, action) => {
+  const initialState = {
+    name : "",
+    email: "",
+    password: "",
+        avatar: null,
+  };
+
+  export const newUserReducer = (state ={ users : initialState} , action) => {
 
     switch (action.type) {
   
-  
+        case 'UPDATE_FIELD':
+         return {
+        ...state,
+        [action.payload.name]: action.payload.value
+         };
   
         case NEW_USER_REQUEST:
   
@@ -455,6 +466,8 @@ import {
   
           error: action.payload,
         };
+
+        
   
       default:
         return state;

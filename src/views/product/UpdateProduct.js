@@ -1,9 +1,11 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams, useNavigate } from 'react-router-dom';
-import {TextField, Button,Select,InputLabel,MenuItem} from "@mui/material";
+import {TextField, Button,Select,InputLabel,MenuItem,Box} from "@mui/material";
+import { useForm } from "react-hook-form";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import MetaData from '../layouts/MetaData'
 import { updateProduct, getProductDetails, clearErrors } from '../../actions/productActions'
 import { UPDATE_PRODUCT_RESET } from '../../constants/productConstants'
 
@@ -52,6 +54,27 @@ const UpdateProduct = () => {
 
     let navigate = useNavigate();
 
+    const {
+        register,
+        handleSubmit,
+        setValue,
+        formState: { errors }
+      } = useForm(
+        { mode:"onChange",
+         defaultValues:
+         {
+          name: name,
+          price: price,
+          description : description,
+          category : category,
+          stock : stock,
+          seller : seller,
+  
+         }
+  
+        }
+      );
+
     const errMsg = (message = '') => toast.error(message, {
 
         position: toast.POSITION.BOTTOM_CENTER
@@ -72,17 +95,12 @@ const UpdateProduct = () => {
 
         } else {
 
-            setName(product.name);
-
-            setPrice(product.price);
-
-            setDescription(product.description);
-
-            setCategory(product.category);
-
-            setSeller(product.seller);
-
-            setStock(product.stock)
+            setValue('name', product.name)
+            setValue('price',product.price)
+            setValue('description',product.description)
+            setValue('category',product.category)
+            setValue('seller',product.seller)
+            setValue('stock',product.stock)
 
             setOldImages(product.images)
 
@@ -124,33 +142,28 @@ const UpdateProduct = () => {
 
 
 
-    const submitHandler = (e) => {
+    const submitHandler = (data) => {
 
-        e.preventDefault();
 
         const formData = new FormData();
 
-        formData.set('name', name);
+        formData.set('name', data.name);
 
-        formData.set('price', price);
+        formData.set('price', data.price);
 
-        formData.set('description', description);
+        formData.set('description', data.description);
 
-        formData.set('category', category);
+        formData.set('category', data.category);
 
-        formData.set('stock', stock);
+        formData.set('stock', data.stock);
 
-        formData.set('seller', seller);
+        formData.set('seller', data.seller);
 
         images.forEach(image => {
 
             formData.append('images', image)
 
         })
-
-        //   for (var [key, value] of formData.entries()) { 
-        //     console.log(key, value);
-        //    }
 
 
         dispatch(updateProduct(product._id, formData))
@@ -198,56 +211,66 @@ const UpdateProduct = () => {
     return (
 
         <React.Fragment>
-        <form onSubmit={submitHandler} encType='multipart/form-data'>
+            <MetaData title={"Update Product"} />
+        <form onSubmit={handleSubmit(submitHandler)} encType='multipart/form-data'>
             <h2>Update Product</h2>
+
+            <InputLabel >Name</InputLabel>
                 <TextField 
-                    label="Name"
                     name="name"
                     required
                     variant="outlined"
                     color="secondary"
                     type="text"
                     onChange={e => setName(e.target.value)}
-                    value={name}
                     sx={{mb: 3}}
                     fullWidth
+                    {...register("name", {
+                        required: "Name is required."
+                      })}
                  />
+                  <InputLabel >Price</InputLabel>
                   <TextField 
-                    label="Price"
                     name="price"
                     required
                     variant="outlined"
                     color="secondary"
                     type="number"
                     onChange={e => setPrice(e.target.value)}
-                    value={price}
                     sx={{mb: 3}}
                     fullWidth
+                    {...register("price", {
+                        required: "Price is required."
+                      })}
                  />
+                    <InputLabel >Description</InputLabel>
                  <TextField 
-                    label="Description"
                     name="description"
                     required
                     variant="outlined"
                     color="secondary"
                     type="text"
                     onChange={e => setDescription(e.target.value)}
-                    value={description}
                     fullWidth
                     sx={{mb: 3}}
+                    {...register("description", {
+                        required: "Description is required."
+                      })}
                  />
 
                 <InputLabel >Category</InputLabel>
                 <Select
-                label="Category"
-                name="category" 
-                required 
-                    value={category}
+                    label="Category"
+                    name="category" 
+                    required 
                     variant="outlined"
                     color="primary"
                     onChange={e => setCategory(e.target.value)}
                     fullWidth         
                     sx={{mb: 3}}
+                    {...register("category", {
+                        required: "Category is required."
+                      })}
                 >
 
                     {categories.map(category => (
@@ -258,31 +281,36 @@ const UpdateProduct = () => {
                     ))}
                 </Select>
 
+                <InputLabel >Stock</InputLabel>
+
                 <TextField 
-                    label="Stock"
+            
                     name="stock"
                     required
                     variant="outlined"
                     color="secondary"
                     type="number"
                     onChange={e => setStock(e.target.value)}
-                    value={stock}
                     fullWidth
                     sx={{mb: 3}}
+                    {...register("stock", {
+                        required: "Stock is required."
+                      })}
                  />
 
-                 
+                <InputLabel >Seller</InputLabel>
                 <TextField 
-                    label="Seller"
                     name="seller"
                     required
                     variant="outlined"
                     color="secondary"
                     type="text"
                     onChange={e => setSeller(e.target.value)}
-                    value={seller}
                     fullWidth
                     sx={{mb: 3}}
+                    {...register("seller", {
+                        required: "Seller is required."
+                      })}
                  />
                  
 
@@ -307,6 +335,7 @@ const UpdateProduct = () => {
                         id='customFile'
 
                         onChange={onChange}
+         
 
                         multiple
 

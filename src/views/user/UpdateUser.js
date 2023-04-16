@@ -4,7 +4,8 @@ import MetaData from '../layouts/MetaData'
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useDispatch, useSelector } from 'react-redux'
-import {TextField, Button,Select,InputLabel,MenuItem} from "@mui/material";
+import { useForm } from "react-hook-form";
+import {TextField, Button,Select,InputLabel,MenuItem,Box} from "@mui/material";
 import { updateUser, getUserDetails, clearErrors } from '../../actions/userActions';
 import { UPDATE_USER_RESET } from '../../constants/userConstants';
 
@@ -12,6 +13,7 @@ import { UPDATE_USER_RESET } from '../../constants/userConstants';
 
 const UpdateUser = () => {
 
+   
     const [name, setName] = useState('')
 
     const [email, setEmail] = useState('')
@@ -25,6 +27,29 @@ const UpdateUser = () => {
     const { error, isUpdated } = useSelector(state => state.user);
 
     const { user } = useSelector(state => state.userDetails)
+    console.log(user.email)
+
+   
+
+    
+
+     const {
+      register,
+      handleSubmit,
+      setValue,
+      formState: { errors }
+    } = useForm(
+      { mode:"onChange",
+       defaultValues:
+       {
+        name: name,
+        email: email,
+        role: role
+
+       }
+
+      }
+    );
 
     const {id} = useParams();
 
@@ -52,11 +77,15 @@ const UpdateUser = () => {
 
         } else {
 
-            setName(user.name);
+            setValue('name', user.name)
+            setValue('email',user.email)
+            setValue('role',user.role)
 
-            setEmail(user.email);
+            // setName(user.name);
 
-            setRole(user.role)
+            // setEmail(user.email);
+
+            // setRole(user.role)
 
         }
 
@@ -90,56 +119,72 @@ const UpdateUser = () => {
 
 
 
-    const submitHandler = (e) => {
+    const submitHandler = (data) => {
+        console.log(data)
 
-        e.preventDefault();
+      
 
-        const formData = new FormData();
+        const userData = {
 
-        formData.set('name', name);
+            name : data.name,
+            email : data.email,
+            role :data.role,
+         
+          }
 
-        formData.set('email', email);
-
-        formData.set('role', role);
-
-        // for (var [key, value] of formData.entries()) { 
-        //     console.log(key, value);
-        //    }
-
-        dispatch(updateUser(user._id, formData))
+        dispatch(updateUser(user._id, userData))
 
     }
 
     return (
 
         <React.Fragment>
+              <MetaData title={"Update User"} />
            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"/>
-        <form onSubmit={submitHandler} encType='multipart/form-data'>
+        <form onSubmit={handleSubmit(submitHandler)} encType='multipart/form-data'>
             <h2>Update User</h2>
+
+            <InputLabel >Name</InputLabel>
                 <TextField 
-                    label="Name"
+                   
                     name="name"
                     required
                     variant="outlined"
                     color="secondary"
                     type="text"
                     onChange={e => setName(e.target.value)}
-                    value={name}
+                   
                     sx={{mb: 3}}
                     fullWidth
+                    {...register("name", {
+                        required: "Name is required."
+                      })}
+                    setValue
                  />
+
+            {errors.name && <Box component="div" sx={{ display: 'block' , color:'red' }}>{errors.name.message}</Box>}   
+                    <InputLabel >Email</InputLabel>
                   <TextField 
-                    label="Email"
+                
                     name="email"
                     required
                     variant="outlined"
                     color="secondary"
                     type="email"
                     onChange={e => setEmail(e.target.value)}
-                    value={email}
+                 
                     sx={{mb: 3}}
                     fullWidth
+                    setValue
+                    {...register("email", {
+                        required: "Email is required.",
+                        pattern: {
+                          value: /^[^@ ]+@[^@ ]+\.[^@ .]{2,}$/,
+                          message: "Email is not valid."
+                        }
+                      })}
                  />
+                   {errors.email && <Box component="div" sx={{ display: 'block' , color:'red' }}>{errors.email.message}</Box>}
                
 
                 <InputLabel >Role</InputLabel>
@@ -147,17 +192,22 @@ const UpdateUser = () => {
                 label="Role"
                 name="role" 
                 required 
-                    value={role}
                     variant="outlined"
                     color="primary"
                     onChange={e => setRole(e.target.value)}
                     fullWidth         
                     sx={{mb: 3}}
+                     setValue
+                    {...register("role", {
+                        required: "Role is required."
+                      })}
                 >
                     <MenuItem value="user">User</MenuItem>
                     <MenuItem value="admin">Admin</MenuItem>
                 
                 </Select>
+
+                {errors.role && <Box component="div" sx={{ display: 'block' , color:'red' }}>{errors.role.message}</Box>}
                  
                  
                     

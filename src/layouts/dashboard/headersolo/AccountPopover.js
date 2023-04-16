@@ -85,7 +85,13 @@ export default function AccountPopover() {
           }),
         }}
       >
-        <Avatar src={account.photoURL} alt="photoURL" />
+        {user ? (
+        <Avatar src={user.avatar && user.avatar.url} alt="photoURL" />
+        ) : (
+          (
+            <Avatar src={account.photoURL} alt="photoURL" />
+            )
+            )}
       </IconButton>
 
       <Popover
@@ -116,14 +122,11 @@ export default function AccountPopover() {
           </Typography>
         </Box>
 
-        <Divider sx={{ borderStyle: 'dashed' }} />
+
+        {/* <Divider sx={{ borderStyle: 'dashed' }} /> */}
 
         <Stack sx={{ p: 1 }}>
-          {/* {MENU_OPTIONS.map((option) => (
-            <MenuItem key={option.label} onClick={handleClose}>
-              {option.label}
-            </MenuItem>
-          ))} */}
+         
 
           {user && user.role === "admin" && (
                         
