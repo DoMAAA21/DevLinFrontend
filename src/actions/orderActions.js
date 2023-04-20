@@ -236,6 +236,11 @@ export const allOrders = () => async (dispatch) => {
 
 export const updateOrder = (id, orderData) => async (dispatch) => {
 
+
+    // for (var pair of orderData.entries()) {
+    //     console.log(pair[0]+ ', ' + pair[1]); 
+    // }
+
     try {
 
 
@@ -256,7 +261,7 @@ export const updateOrder = (id, orderData) => async (dispatch) => {
 
 
 
-        const { data } = await axios.put(`${process.env.REACT_APP_API}/api/v1/admin/order/${id}`, orderData,{withCredentials:true}, config)
+        const { data } = await axios.put(`${process.env.REACT_APP_API}/api/v1/admin/order/${id}`, orderData,{withCredentials:true},config)
 
 
 
@@ -272,11 +277,12 @@ export const updateOrder = (id, orderData) => async (dispatch) => {
 
     } catch (error) {
 
+         console.log(error.response.data.errMessage)
         dispatch({
 
             type: UPDATE_ORDER_FAIL,
 
-            payload: error.response.data.message
+            payload: error.response.data.errMessage
 
         })
 

@@ -34,6 +34,9 @@ import Profile from './views/auth/Profile';
 import UpdateProfile from './views/auth/UpdateProfile';
 import ListOrders from './views/auth/MyOrders';
 import OrderDetails from "./views/auth/OrderDetails";
+import OrdersList from "./views/order/OrdersList";
+import ProcessOrder from "./views/order/ProcessOrder";
+import ProtectedRoute from "./ProtectedRoute";
 // ----------------------------------------------------------------------
 
 export default function Router() {
@@ -65,6 +68,7 @@ export default function Router() {
         { path: 'me/update', element: <UpdateProfile /> },
         { path: 'me/orders', element: <ListOrders /> },
         { path: 'order/:id', element: <OrderDetails /> },
+
      
 
       ],
@@ -74,15 +78,17 @@ export default function Router() {
       element: <DashboardLayout />,
       children: [
         { element: <Navigate to="shop" />, exact: true },
-        { path: 'app', element: <DashboardAppPage /> },
-        { path: 'user', element: <UserPage /> },
-        { path: 'blog', element: <BlogPage /> },
-        { path: 'users', element: <UsersList />,exact: "true" },
-        { path: 'adduser', element: <AddUser />,exact: "true" },
-        { path: 'updateuser/:id', element: <UpdateUser />,exact: "true" },
-        { path: 'products', element: <ProductsList />,exact: "true" },
-        { path: 'addproduct', element: <AddProduct />,exact: "true" },
-        { path: 'updateproduct/:id', element: <UpdateProduct />,exact: "true" },
+        { path: 'app', element:<ProtectedRoute isAdmin={true} > <DashboardAppPage /> </ProtectedRoute >},
+        { path: 'user', element:<ProtectedRoute isAdmin={true} > <UserPage />  </ProtectedRoute>},
+        { path: 'blog', element: <ProtectedRoute isAdmin={true} > <BlogPage />  </ProtectedRoute>},
+        { path: 'users', element: <ProtectedRoute isAdmin={true} > <UsersList /> </ProtectedRoute>,exact: "true" },
+        { path: 'adduser', element: <ProtectedRoute isAdmin={true} ><AddUser /></ProtectedRoute>,exact: "true" },
+        { path: 'updateuser/:id', element: <ProtectedRoute isAdmin={true} > <UpdateUser /></ProtectedRoute>,exact: "true" },
+        { path: 'products', element: <ProtectedRoute isAdmin={true} ><ProductsList /></ProtectedRoute>,exact: "true" },
+        { path: 'addproduct', element: <ProtectedRoute isAdmin={true} ><AddProduct /></ProtectedRoute>,exact: "true" },
+        { path: 'updateproduct/:id', element: <ProtectedRoute isAdmin={true} ><UpdateProduct /></ProtectedRoute>,exact: "true" },
+        { path: 'orders', element: <ProtectedRoute isAdmin={true} ><OrdersList /></ProtectedRoute>,exact: "true" },
+        { path: 'order/:id', element: <ProtectedRoute isAdmin={true} ><ProcessOrder /></ProtectedRoute>,exact: "true" },
         
        
       ],

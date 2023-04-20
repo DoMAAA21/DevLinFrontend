@@ -275,6 +275,9 @@ import {
   };
 
   export const newReview = (reviewData) => async (dispatch) => {
+  //   for (var pair of reviewData.entries()) {
+  //     console.log(pair[0]+ ', ' + pair[1]); 
+  // }
 
     try {
   

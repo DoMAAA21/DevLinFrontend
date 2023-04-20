@@ -1,6 +1,10 @@
 import React from "react";
 import { Link,useNavigate  } from "react-router-dom";
-import {  Button,createTheme,ThemeProvider,Rating} from "@mui/material";
+import {  createTheme,Rating} from "@mui/material";
+import { CardContent, Typography, Grid, Tooltip, Fab } from '@mui/material';
+import { Stack } from '@mui/system';
+import BlankCard from "./BlankCard";
+import { IconBasket } from '@tabler/icons-react';
 // import { Button } from 'semantic-ui-react'
 
  
@@ -32,56 +36,38 @@ const Product = ({ product }) => {
 
     
   return (
-    
     <div className="col-sm-12 col-md-6 col-lg-3 my-3">
-      <div className="card p-3 rounded">
-      <div class="badge bg-success text-white position-absolute" >Sale</div>
-        <img className="card-img-top mx-auto" height="250px" width ="250px" src={product.images[0].url} />
-        <div className="card-body d-flex flex-column">
-          <h5 className="card-title">
-        
-            <a href={`/shop/${product._id}`}>{product.name}</a>
-         
-          </h5>
-          {/* <div className="ratings mt-auto">
-            <div className="rating-outer">
-              <div
-                className="rating-inner"
-                style={{ width: `${(product.ratings / 5) * 100}%` }}
-              ></div>
-            </div>
-            <span id="no_of_reviews">({product.numOfReviews} reviews)</span>
-          </div> */}
-          {/* console.log(`${(product.ratings / 5) * 100}`) */}
-          <Rating name="half-rating" defaultValue={`${product.ratings/product.numOfReviews}`} precision={2.5} readOnly/>
-          <span id="no_of_reviews">({product.numOfReviews} reviews)</span>
-          {/* <Rating
-        name="simple-controlled"
-        value={value}
-        onChange={(event, newValue) => {
-          setValue(newValue);
-        }}
-      /> */}
-          <p className="card-text">${product.price}</p>
-          
-          <ThemeProvider theme={theme}>
-           <Button variant="contained" 
-           component={Link}
-           color="primary"
-           to={`/shop/${product._id}`}
-           
-           >
-            View Details</Button>
+    <Grid item sm={12} md={4} lg={3}>
+    <BlankCard>
+    <Typography component={Link} to={`/shop/${product._id}`}>
+        <img src={product.images[0].url} height="300px" alt="img" width="250px" />
+    </Typography>
+    <Tooltip title="View Details  " component={Link} to={`/shop/${product._id}`}>
+        <Fab
+            size="small"
+            color="primary"
+            sx={{ bottom: '75px', right: '15px', position: 'absolute' }}
+        >
+            <IconBasket size="16" />
+            {/* <i class="bi bi-basket2" size="16"></i> */}
+        </Fab>
+    </Tooltip>
+    <CardContent sx={{ p: 3, pt: 2 }}>
+        <Typography variant="h6">{product.name}</Typography>
+        <Stack direction="row" alignItems="center" justifyContent="space-between" mt={1}>
+            <Stack direction="row" alignItems="center">
+                <Typography variant="h6">${product.price}</Typography>
+                <Typography color="textSecondary" ml={1} sx={{ textDecoration: 'line-through' }}>
+                ${product.price + 20}
+                </Typography>
+            </Stack>
+            <Rating name="read-only" size="small" value={`${product.ratings/product.numOfReviews}`} readOnly />
+        </Stack>
+    </CardContent>
+</BlankCard>
+</Grid>
+</div>
 
-            {/* <Button variant="contained" >Primary</Button>
-      <Button color="secondary" variant="contained" >Secondary</Button> */}
-            </ThemeProvider>
-
-
-        
-        </div>
-      </div>
-    </div>
   );
 };
 export default Product;

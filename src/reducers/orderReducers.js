@@ -358,15 +358,15 @@ export const orderReducer = (state = {}, action) => {
 
 
 
-        // case DELETE_ORDER_RESET:
+        case DELETE_ORDER_RESET:
 
-        //     return {
+            return {
 
-        //         ...state,
+                ...state,
 
-        //         isDeleted: false
+                isDeleted: false
 
-        //     }
+            }
 
 
 

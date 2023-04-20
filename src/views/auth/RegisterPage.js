@@ -3,7 +3,8 @@ import axios from 'axios';
 import React, { Fragment, useState, useEffect } from 'react'
 // @mui
 import { styled } from '@mui/material/styles';
-import { Link, Container, Typography, Divider, Stack, Button } from '@mui/material';
+import { Container, Typography, Divider, Stack, Button } from '@mui/material';
+import {Link} from 'react-router-dom'
 // hooks
 import useResponsive from '../../hooks/useResponsive';
 // components
@@ -83,10 +84,10 @@ export default function RegisterPage() {
     );
 
     // log out function to log the user out of google and set the profile array to null
-    const logOut = () => {
-        googleLogout();
-        setProfile(null);
-    };
+    // const logOut = () => {
+    //     googleLogout();
+    //     setProfile(null);
+    // };
 
   const mdUp = useResponsive('up', 'md');
 
@@ -122,7 +123,7 @@ export default function RegisterPage() {
 
             <Typography variant="body2" sx={{ mb: 5 }}>
              Already have an account? {''}
-              <Link to="login" >Go to Login</Link>
+              <Link to="/login" >Go to Login</Link>
             
             </Typography>
 
