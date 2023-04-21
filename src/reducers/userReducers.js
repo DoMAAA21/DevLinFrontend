@@ -51,6 +51,9 @@ import {
     NEW_PASSWORD_REQUEST,
     NEW_PASSWORD_SUCCESS,
     NEW_PASSWORD_FAIL,
+    USER_SALES_REQUEST,
+    USER_SALES_SUCCESS,
+    USER_SALES_FAIL,
    
 
 
@@ -473,6 +476,37 @@ import {
         return state;
     }
   };
+
+  export const customerSalesReducer = (state = { customerSales: [] }, action) => {
+    switch (action.type) {
+        case USER_SALES_REQUEST:
+            return {
+                ...state,
+                loading: true
+            }
+
+        case USER_SALES_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                customerSales: action.payload
+            }
+        case USER_SALES_FAIL:
+            return {
+                ...state,
+                loading: false,
+                error: action.payload
+            }
+        case CLEAR_ERRORS:
+            return {
+                ...state,
+                error: null
+            }
+        default:
+            return state;
+    }
+
+}
 
  
   

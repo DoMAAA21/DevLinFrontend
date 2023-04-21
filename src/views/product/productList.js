@@ -206,7 +206,7 @@ const ProductsList = () => {
 
         <>
 
-            <MetaData title={'All Users'} />
+            <MetaData title={'All Products'} />
 
            
             <Button variant="contained" component={Link} to="/dashboard/addproduct">

@@ -1,4 +1,6 @@
+import React, { Fragment, useEffect } from 'react'
 import { Helmet } from 'react-helmet-async';
+import {Link} from 'react-router-dom'
 import { faker } from '@faker-js/faker';
 // @mui
 import { useTheme } from '@mui/material/styles';
@@ -17,11 +19,37 @@ import {
   AppCurrentSubject,
   AppConversionRates,
 } from '../sections/@dashboard/app';
+import { useDispatch, useSelector } from 'react-redux'
+import { userSales,allUsers } from '../actions/userActions'
+import { monthlySalesChart, productSalesChart } from '../actions/chartActions'
+import ProductSalesChart from '../views/charts/ProductSalesChart';
+import MonthlySalesChart from '../views/charts/MonthlySalesChart';
+import UserSalesChart from '../views/charts/UserSalesChart';
+import { getAdminProducts } from '../actions/productActions'
+import { allOrders } from '../actions/orderActions'
 
 // ----------------------------------------------------------------------
 
 export default function DashboardAppPage() {
-  const theme = useTheme();
+  const dispatch = useDispatch();
+ 
+  const { products } = useSelector(state => state.products)
+    const { users } = useSelector(state => state.allUsers)
+    const { orders, totalAmount, loading } = useSelector(state => state.allOrders)
+  const { productSales } = useSelector(state => state.productSales)
+  const { salesPerMonth } = useSelector(state => state.salesPerMonth)
+  const { customerSales } = useSelector(state => state.customerSales)
+  // console.log(productSales)
+
+  useEffect(() => {
+    dispatch(getAdminProducts())
+    dispatch(allOrders())
+    dispatch(allUsers())
+    dispatch(userSales())
+    dispatch(monthlySalesChart())
+    dispatch(productSalesChart())
+
+}, [dispatch])
 
   return (
     <>
@@ -36,99 +64,40 @@ export default function DashboardAppPage() {
 
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Weekly Sales" total={714000} icon={'ant-design:android-filled'} />
+            <AppWidgetSummary title="Total Sales" total={totalAmount && totalAmount.toFixed(2)} icon={'ph:currency-circle-dollar-fill'} />
+          </Grid>
+
+          <Grid item xs={12} sm={6} md={3} >
+            <AppWidgetSummary title="Products" total={products && products.length} color="info" icon={'material-symbols:laptop-mac-outline'} />
+          </Grid>
+
+          <Grid item xs={12} sm={6} md={3} >
+            <AppWidgetSummary  title="Item Orders" total={orders && orders.length} color="warning" icon={'icon-park-solid:transaction'} />
+          
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="New Users" total={1352831} color="info" icon={'ant-design:apple-filled'} />
+            <AppWidgetSummary title="Users" total={users && users.length} color="error" icon={'ph:users-four-fill'} />
           </Grid>
 
-          <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Item Orders" total={1723315} color="warning" icon={'ant-design:windows-filled'} />
+          <Grid item xs={12} md={6} lg={7}>
+          <ProductSalesChart data={productSales} />
+          </Grid>
+      
+        
+                         
+
+          <Grid item xs={12} md={6} lg={5}>
+           
+          <UserSalesChart data={customerSales} />
+    
           </Grid>
 
-          <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Bug Reports" total={234} color="error" icon={'ant-design:bug-filled'} />
+          <Grid item xs={12} md={6} lg={12}>
+          <MonthlySalesChart data={salesPerMonth} />
           </Grid>
 
-          <Grid item xs={12} md={6} lg={8}>
-            <AppWebsiteVisits
-              title="Website Visits"
-              subheader="(+43%) than last year"
-              chartLabels={[
-                '01/01/2003',
-                '02/01/2003',
-                '03/01/2003',
-                '04/01/2003',
-                '05/01/2003',
-                '06/01/2003',
-                '07/01/2003',
-                '08/01/2003',
-                '09/01/2003',
-                '10/01/2003',
-                '11/01/2003',
-              ]}
-              chartData={[
-                {
-                  name: 'Team A',
-                  type: 'column',
-                  fill: 'solid',
-                  data: [23, 11, 22, 27, 13, 22, 37, 21, 44, 22, 30],
-                },
-                {
-                  name: 'Team B',
-                  type: 'area',
-                  fill: 'gradient',
-                  data: [44, 55, 41, 67, 22, 43, 21, 41, 56, 27, 43],
-                },
-                {
-                  name: 'Team C',
-                  type: 'line',
-                  fill: 'solid',
-                  data: [30, 25, 36, 30, 45, 35, 64, 52, 59, 36, 39],
-                },
-              ]}
-            />
-          </Grid>
-
-          <Grid item xs={12} md={6} lg={4}>
-            <AppCurrentVisits
-              title="Current Visits"
-              chartData={[
-                { label: 'America', value: 4344 },
-                { label: 'Asia', value: 5435 },
-                { label: 'Europe', value: 1443 },
-                { label: 'Africa', value: 4443 },
-              ]}
-              chartColors={[
-                theme.palette.primary.main,
-                theme.palette.info.main,
-                theme.palette.warning.main,
-                theme.palette.error.main,
-              ]}
-            />
-          </Grid>
-
-          <Grid item xs={12} md={6} lg={8}>
-            <AppConversionRates
-              title="Conversion Rates"
-              subheader="(+43%) than last year"
-              chartData={[
-                { label: 'Italy', value: 400 },
-                { label: 'Japan', value: 430 },
-                { label: 'China', value: 448 },
-                { label: 'Canada', value: 470 },
-                { label: 'France', value: 540 },
-                { label: 'Germany', value: 580 },
-                { label: 'South Korea', value: 690 },
-                { label: 'Netherlands', value: 1100 },
-                { label: 'United States', value: 1200 },
-                { label: 'United Kingdom', value: 1380 },
-              ]}
-            />
-          </Grid>
-
-          <Grid item xs={12} md={6} lg={4}>
+          {/* <Grid item xs={12} md={6} lg={4}>
             <AppCurrentSubject
               title="Current Subject"
               chartLabels={['English', 'History', 'Physics', 'Geography', 'Chinese', 'Math']}
@@ -211,7 +180,7 @@ export default function DashboardAppPage() {
                 { id: '5', label: 'Sprint Showcase' },
               ]}
             />
-          </Grid>
+          </Grid> */}
         </Grid>
       </Container>
     </>

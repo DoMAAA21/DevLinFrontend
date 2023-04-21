@@ -26,6 +26,11 @@ const navConfig = [
     path: '/dashboard/orders',
     icon: icon('ic_orders'),
   },
+  {
+    title: 'reviews',
+    path: '/dashboard/reviews',
+    icon: icon('ic_stars'),
+  },
  
 ];
 

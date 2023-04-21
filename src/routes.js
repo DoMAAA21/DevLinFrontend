@@ -37,6 +37,7 @@ import OrderDetails from "./views/auth/OrderDetails";
 import OrdersList from "./views/order/OrdersList";
 import ProcessOrder from "./views/order/ProcessOrder";
 import ProtectedRoute from "./ProtectedRoute";
+import ProductReviews from "./views/reviews/ProductReviews";
 // ----------------------------------------------------------------------
 
 export default function Router() {
@@ -89,6 +90,7 @@ export default function Router() {
         { path: 'updateproduct/:id', element: <ProtectedRoute isAdmin={true} ><UpdateProduct /></ProtectedRoute>,exact: "true" },
         { path: 'orders', element: <ProtectedRoute isAdmin={true} ><OrdersList /></ProtectedRoute>,exact: "true" },
         { path: 'order/:id', element: <ProtectedRoute isAdmin={true} ><ProcessOrder /></ProtectedRoute>,exact: "true" },
+        { path: 'reviews', element: <ProtectedRoute isAdmin={true} ><ProductReviews /></ProtectedRoute>,exact: "true" },
         
        
       ],

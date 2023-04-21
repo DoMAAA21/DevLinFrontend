@@ -112,10 +112,17 @@ const Payment = () => {
         order.userid =  cookie.get('userid')
 
 
-
+        let cart = localStorage.getItem("cartItems");
+        let shipinfo = localStorage.getItem("shippingInfo");
+        sessionStorage.setItem("cart", cart);
+        sessionStorage.setItem("shipinfo", shipinfo);
+        // let citems = sessionStorage.getItem("cart");
+    //    console.log(citems.product)
         dispatch(createOrder(order))
-        // dispatch(clearCart())
+        dispatch(clearCart())
+        
         localStorage.removeItem('cartItems');
+        localStorage.removeItem('shippingInfo');
         // sessionStorage.clear();
         navigate('/success')
 

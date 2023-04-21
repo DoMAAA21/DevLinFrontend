@@ -52,6 +52,9 @@ import {
     NEW_PASSWORD_REQUEST,
     NEW_PASSWORD_SUCCESS,
     NEW_PASSWORD_FAIL,
+    USER_SALES_REQUEST,
+    USER_SALES_SUCCESS,
+    USER_SALES_FAIL,
 
   } from "../constants/userConstants";
 
@@ -251,7 +254,7 @@ export const allUsers = () => async (dispatch) => {
   
   
 
-        // console.log(data);
+        //console.log(data);
   
         dispatch({
   
@@ -454,8 +457,9 @@ export const updateProfile = (userData) => async (dispatch) => {
     };
 
     const { data } = await axios.put(`${process.env.REACT_APP_API}/api/v1/me/update`, userData,{withCredentials:true}, config);
+    // localStorage.setItem("user",JSON.stringify(data.user));
 
-    console.log(data)
+    // console.log(data)
 
     dispatch({
       type: UPDATE_PROFILE_SUCCESS,
@@ -501,4 +505,27 @@ export const updatePassword = (passwords) => async (dispatch) => {
     });
   }
 };
+
+
+export const userSales = () => async (dispatch) => {
+  try {
+      const config = {
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          withCredentials: true,
+      }
+      dispatch({ type: USER_SALES_REQUEST })
+      const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/orders/customer-sales`,config)
+      dispatch({
+          type: USER_SALES_SUCCESS,
+          payload: data.customerSales,
+      })
+  } catch (error) {
+      dispatch({
+          type: USER_SALES_FAIL,
+          payload: error.response.data.message
+      })
+  }
+}
 
