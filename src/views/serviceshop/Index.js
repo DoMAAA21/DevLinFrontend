@@ -1,59 +1,42 @@
 import React, { Fragment, useEffect, useState } from "react";
 import MetaData from "../layouts/MetaData";
-import Product from "./Product";
+import Service from "./Service";
 import Loader from "../layouts/Loader";
 import { useParams } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
-import { getProducts } from "../../actions/productActions";
+import { getServices } from "../../actions/serviceActions";
 import { Link } from "react-router-dom";
 import Pagination from "react-js-pagination";
 import Slider, { Range, createSliderWithTooltip } from "rc-slider";
 
 import "rc-slider/assets/index.css";
 
-// const SliderWithTooltip = createSliderWithTooltip(Slider);
 
-
-//
 
 const Home = ({ match }) => {
   const dispatch = useDispatch();
 
-//   const createSliderWithToolTip = Slider.createSliderWithToolTip;
   const Range = createSliderWithTooltip(Slider.Range);
   const [price, setPrice] = useState([1, 1000]);
   const [category, setCategory] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
 
-  const categories = [
-    "Electronics",
-    "Cameras",
-    "Laptops",
-    "Accessories",
-    "Headphones",
-    "Food",
-    "Books",
-    "Clothes/Shoes",
-    "Beauty/Health",
-    "Sports",
-    "Outdoor",
-    "Home",
-  ];
+
 
   const {
     loading,
-    products,
+    services,
     error,
-    productsCount,
+    servicesCount,
     resPerPage,
-    filteredProductsCount,
-  } = useSelector((state) => state.products);
+    filteredServicesCount,
+  } = useSelector((state) => state.services);
 
   let { keyword } = useParams();
 
   useEffect(() => {
-    dispatch(getProducts(keyword, currentPage, price, category));
+    dispatch(getServices(keyword, currentPage, price, category));
     if (error) {
       return alert.error(error);
     }
@@ -63,12 +46,14 @@ const Home = ({ match }) => {
     setCurrentPage(pageNumber);
   }
 
-  let count = productsCount;
+  let count = servicesCount;
   if (keyword) {
-    count = filteredProductsCount;
+    count = filteredServicesCount;
   }
 
   console.log(keyword);
+
+
 
   return (
     <Fragment>
@@ -77,8 +62,8 @@ const Home = ({ match }) => {
       ) : (
         <Fragment>
           <MetaData title={"Devlin Shop"} />
-          <h1 id="products_heading">Our Products</h1>
-          <section id="products" className="container mt-5">
+          <h1 id="products_heading">Our Services</h1>
+          <section id="services" className="container mt-5">
             {/* <div className="row">
                         {products && products.map(product => (
                             <Product key={product._id} product={product} />
@@ -128,15 +113,17 @@ const Home = ({ match }) => {
 
                   <div className="col-6 col-md-9">
                     <div className="row">
-                      {products.map((product) => (
-                        <Product key={product._id} product={product} col={3} />
+                      {services.map((service) => (
+                        <Service key={service._id} service={service} col={4} />
                       ))}
                     </div>
                   </div>
                 </Fragment>
               ) : (
-                products.map((product) => (
-                  <Product key={product._id} product={product} col={3} />
+                services.map((service) => (
+                
+                  <Service key={service._id} service={service} col={3} />
+                  
                 ))
               )}
             </div>

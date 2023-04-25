@@ -1,9 +1,11 @@
 export const ADD_TO_CART = 'ADD_TO_CART'
-
 export const REMOVE_ITEM_CART = 'REMOVE_ITEM_CART'
-
 export const SAVE_SHIPPING_INFO = 'SAVE_SHIPPING_INFO'
 export const CLEAR_CART = 'CLEAR_CART'
+export const SADD_TO_CART = 'SADD_TO_CART'
+export const SREMOVE_ITEM_CART = 'SREMOVE_ITEM_CART'
+export const SCLEAR_CART = 'SCLEAR_CART'
+export const SSAVE_SHIPPING_INFO = 'SSAVE_SHIPPING_INFO'
 
 
 

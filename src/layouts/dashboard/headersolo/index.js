@@ -56,6 +56,8 @@ export default function Header({ onOpenNav }) {
   const dispatch = useDispatch();
   
 const { cartItems } = useSelector(state => state.cart)
+const { scartItems } = useSelector(state => state.scart)
+
 
 const { user, loading } = useSelector((state) => state.auth);
   return (
@@ -97,6 +99,22 @@ const { user, loading } = useSelector((state) => state.auth);
             />
 
             <span className="ml-1" id="cart_count">{cartItems.length}</span>
+           
+
+            
+          </Link>
+
+          <Link to="/servicecart" style={{ textDecoration: "none" }}>
+            {/* <span id="cart" className="ml-3">
+              Cart
+            </span> */}
+            <FaShoppingCart
+            size="2em"
+         
+            />
+
+            <span className="ml-1" id="cart_count">{scartItems.length}</span>
+           
 
             
           </Link>

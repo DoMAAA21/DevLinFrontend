@@ -14,7 +14,7 @@ import {
       NEW_REVIEW_RESET,
   
       NEW_REVIEW_FAIL,
-      // ADMIN_PRODUCTS_REQUEST,
+      ADMIN_PRODUCTS_REQUEST,
   
           ADMIN_PRODUCTS_SUCCESS,
   
@@ -64,6 +64,7 @@ import {
 export const productsReducer = (state = { products: [] }, action) => {
     switch (action.type) {
       case ALL_PRODUCTS_REQUEST:
+        case ADMIN_PRODUCTS_REQUEST:
         return {
           loading: true,
           products: [],
@@ -105,7 +106,7 @@ export const productsReducer = (state = { products: [] }, action) => {
   };
 
 
-  export const productReducer = (state = {}, action) => {
+export const productReducer = (state = {}, action) => {
 
     switch (action.type) {
   
@@ -209,7 +210,7 @@ export const productsReducer = (state = { products: [] }, action) => {
   
     }
   
-  }
+}
 
   export const newProductReducer = (state = { product: {} }, action) => {
 

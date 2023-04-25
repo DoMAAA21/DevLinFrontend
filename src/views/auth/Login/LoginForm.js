@@ -71,7 +71,18 @@ export default function LoginForm() {
       navigate(`/${redirect}`, { replace: true });
 
     
-    } else if (isAuthenticated) navigate("/");
+    } 
+    else if (isAuthenticated && redirect === "serviceshipping") {
+      // navigate(redirect.get('redirect'), {replace: true})
+      notifys('Logged In');
+      navigate(`/${redirect}`, { replace: true });
+
+    
+    } 
+
+    
+    
+    else if (isAuthenticated) navigate("/");
 
     if (error) {
       notify(error);

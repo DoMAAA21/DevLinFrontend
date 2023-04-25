@@ -33,7 +33,7 @@ const OrderDetails = () => {
 
     const { loading, error, order = {} } = useSelector(state => state.orderDetails)
 
-    const { shippingInfo, orderItems, paymentInfo, user, totalPrice, orderStatus } = order
+    const { shippingInfo, orderItems, paymentInfo, user, totalPrice, orderStatus,type } = order
 
 
 
@@ -121,7 +121,7 @@ const OrderDetails = () => {
 
 
 
-                            <h4 className="my-4">Order Items:</h4>
+                            {type==="Service"?  <h4 className="my-4"> Services </h4> :  <h4 className="my-4"> Order Items </h4>}
 
 
 
@@ -159,11 +159,7 @@ const OrderDetails = () => {
 
 
 
-                                        <div className="col-4 col-lg-3 mt-4 mt-lg-0">
-
-                                            <p>{item.quantity} Piece(s)</p>
-
-                                        </div>
+                                       
 
                                     </div>
 

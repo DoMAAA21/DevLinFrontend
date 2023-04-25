@@ -11,7 +11,10 @@ import { toast } from "react-toastify";
 import { NEW_REVIEW_RESET } from "../../constants/productConstants";
 import {  createTheme,Rating} from "@mui/material";
 // import Button from 'react-bootstrap/Button';
+// import {Filter} from 'bad-words'
 import Modal from 'react-bootstrap/Modal';
+var Filter = require('bad-words');
+
 
 
 const ProductDetails = () => {
@@ -24,7 +27,7 @@ const ProductDetails = () => {
   const [quantity, setQuantity] = useState(1);
 
   const dispatch = useDispatch();
-
+  const filter = new Filter();
   let { id } = useParams();
 
   const { loading, error, product } = useSelector(
@@ -185,19 +188,11 @@ function setUserRatings() {
 
   const reviewHandler = () => {
 
-    // const formData = new FormData();
-
-
-
-    // formData.set('rating', rating);
-
-    // formData.set('comment', comment);
-
-    // formData.set('productId', id);
+   let filteredcomment =  filter.clean(comment)
 
     const formData = {
       rating: rating,
-      comment: comment,
+      comment: filteredcomment,
       productId: id
     }
 

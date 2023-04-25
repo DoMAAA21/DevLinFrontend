@@ -21,7 +21,10 @@ import {
   
 } from "./reducers/userReducers";
 import { salesPerMonthReducer, productSalesReducer } from './reducers/chartReducers';
-import { cartReducer } from './reducers/cartReducers'
+import { cartReducer,scartReducer } from './reducers/cartReducers'
+import { allServiceReducer,newServiceReducer, serviceDetailsReducer, serviceReducer, servicesReducer } from "./reducers/serviceReducers";
+
+
 const reducer = combineReducers({
 
 allUsers: allUsersReducer,
@@ -45,6 +48,14 @@ review: reviewReducer,
 customerSales: customerSalesReducer,
 salesPerMonth: salesPerMonthReducer,
 productSales: productSalesReducer,
+allservices: allServiceReducer,
+newService : newServiceReducer,
+service: serviceReducer,
+serviceDetails : serviceDetailsReducer,
+services: servicesReducer,
+scart: scartReducer,
+
+
 
 
 
@@ -67,6 +78,23 @@ let initialState = {
           : {}
 
   },
+
+  scart: {
+
+    scartItems: localStorage.getItem('scartItems')
+
+        ? JSON.parse(localStorage.getItem('scartItems'))
+
+        : [],
+
+    sshippingInfo: localStorage.getItem('sshippingInfo')
+
+        ? JSON.parse(localStorage.getItem('sshippingInfo'))
+
+       : {}
+
+
+},
 
   auth :
   {

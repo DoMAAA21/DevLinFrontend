@@ -38,6 +38,14 @@ import OrdersList from "./views/order/OrdersList";
 import ProcessOrder from "./views/order/ProcessOrder";
 import ProtectedRoute from "./ProtectedRoute";
 import ProductReviews from "./views/reviews/ProductReviews";
+import ServicesList from "./views/service/ServiceList";
+import AddService from "./views/service/AddService";
+import UpdateService from  "./views/service/UpdateService";
+import ServiceIndex from "./views/serviceshop/Index"
+import ServiceDetails from "./views/serviceshop/ServiceDetails"
+import ServiceCart from "./views/servicecart/ServiceCart"
+import ServiceShipping from "./views/servicecart/ServiceShipping"
+import ServiceSuccess from "./views/servicecart/ServiceSuccess"
 // ----------------------------------------------------------------------
 
 export default function Router() {
@@ -69,6 +77,11 @@ export default function Router() {
         { path: 'me/update', element: <UpdateProfile /> },
         { path: 'me/orders', element: <ListOrders /> },
         { path: 'order/:id', element: <OrderDetails /> },
+        { path: 'services', element: <ServiceIndex /> },
+        { path: 'service/:id', element: <ServiceDetails /> },
+        { path: 'servicecart', element: <ServiceCart /> },
+        { path: 'serviceshipping', element: <ServiceShipping /> },
+        { path: 'servicesuccess', element: <ServiceSuccess /> },
 
      
 
@@ -91,6 +104,9 @@ export default function Router() {
         { path: 'orders', element: <ProtectedRoute isAdmin={true} ><OrdersList /></ProtectedRoute>,exact: "true" },
         { path: 'order/:id', element: <ProtectedRoute isAdmin={true} ><ProcessOrder /></ProtectedRoute>,exact: "true" },
         { path: 'reviews', element: <ProtectedRoute isAdmin={true} ><ProductReviews /></ProtectedRoute>,exact: "true" },
+        { path: 'services', element: <ProtectedRoute isAdmin={true} > <ServicesList /> </ProtectedRoute>,exact: "true" },
+        { path: 'addservice', element: <ProtectedRoute isAdmin={true} > <AddService /> </ProtectedRoute>,exact: "true" },
+        { path: 'updateservice/:id', element: <ProtectedRoute isAdmin={true} > <UpdateService /></ProtectedRoute>,exact: "true" },
         
        
       ],

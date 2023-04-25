@@ -20,7 +20,7 @@ const ProcessOrder = () => {
 
     const { loading, order = {} } = useSelector(state => state.orderDetails)
 
-    const { shippingInfo, orderItems, paymentInfo, user, totalPrice, orderStatus } = order
+    const { shippingInfo, orderItems, paymentInfo, user, totalPrice, orderStatus,type } = order
 
     const { error, isUpdated } = useSelector(state => state.order)
 
@@ -143,7 +143,9 @@ const ProcessOrder = () => {
 
                                     <p className={order.orderStatus && String(order.orderStatus).includes('Delivered') ? "greenColor" : "redColor"} ><b>{orderStatus}</b></p>
 
-                                    <h4 className="my-4">Order Items:</h4>
+                                  
+                                       {type==="Service"?  <h4 className="my-4"> Services </h4> :  <h4 className="my-4"> Order Items </h4>}
+                                        
 
                                     <hr />
 
@@ -175,11 +177,7 @@ const ProcessOrder = () => {
 
 
 
-                                                <div className="col-4 col-lg-3 mt-4 mt-lg-0">
-
-                                                    <p>{item.quantity} Piece(s)</p>
-
-                                                </div>
+                                                
 
                                             </div>
 
