@@ -45,7 +45,9 @@ import ServiceIndex from "./views/serviceshop/Index"
 import ServiceDetails from "./views/serviceshop/ServiceDetails"
 import ServiceCart from "./views/servicecart/ServiceCart"
 import ServiceShipping from "./views/servicecart/ServiceShipping"
-import ServiceSuccess from "./views/servicecart/ServiceSuccess"
+import ServiceSuccess from "./views/servicecart/ServiceSuccess";
+import BuildaPc from "./views/Buildapc/Index";
+import BuildSuccess from "./views/Buildapc/BuildSuccess";
 // ----------------------------------------------------------------------
 
 export default function Router() {
@@ -82,6 +84,8 @@ export default function Router() {
         { path: 'servicecart', element: <ServiceCart /> },
         { path: 'serviceshipping', element: <ServiceShipping /> },
         { path: 'servicesuccess', element: <ServiceSuccess /> },
+        { path: 'build-a-pc', element: <BuildaPc /> },
+        { path: 'build-success', element:   <BuildSuccess />  },
 
      
 

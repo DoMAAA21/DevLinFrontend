@@ -107,36 +107,17 @@ const ServiceDetails = () => {
             <div className="col-12 col-lg-5 mt-5">
               <h3>{service.name}</h3>
 
-              <p id="product_id">Product # {service._id}</p>
+              <p id="product_id">Service # {service._id}</p>
 
               <hr />
 
-             
-              {/* <Rating name="half-rating" defaultValue={`${(product.ratings / 5) * 100}`} precision={2.5} readOnly/> */}
-              
-
-              {/* <span id="no_of_reviews">({product.numOfReviews} Reviews)</span> */}
+ 
 
               <hr />
 
               <p id="product_price">${service.price}</p>
 
-              <div className="stockCounter d-inline">
-                <span className="btn btn-danger minus" >
-                  -
-                </span>
-
-                <input
-                  type="number"
-                  className="form-control count d-inline"
-                  value={quantity}
-                  readOnly
-                />
-
-                <span className="btn btn-primary plus" >
-                  +
-                </span>
-              </div>
+         
 
               <button type="button" id="cart_btn" className="btn btn-primary d-inline ml-4" 
              onClick={saddToCart}>Add to Services</button>
@@ -161,9 +142,7 @@ const ServiceDetails = () => {
 
               <hr />
 
-              <p id="product_seller mb-3">
-                Sold by: <strong>Seller</strong>
-              </p>
+             
 
             </div>
           </div>

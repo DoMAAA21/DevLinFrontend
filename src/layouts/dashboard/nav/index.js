@@ -4,6 +4,7 @@ import { useLocation } from 'react-router-dom';
 // @mui
 import { styled, alpha } from '@mui/material/styles';
 import { Box, Link, Button, Drawer, Typography, Avatar, Stack } from '@mui/material';
+import {Link as RouterLink} from 'react-router-dom'
 // mock
 import account from '../../../_mock/account';
 // hooks
@@ -15,7 +16,7 @@ import NavSection from '../../../components/nav-section';
 //
 import navConfig from './config';
 import { useDispatch, useSelector } from 'react-redux'
-
+import { FcRadarPlot } from "react-icons/fc";
 // import { logout } from '../../../actions/userActions'
 
 // ----------------------------------------------------------------------
@@ -57,8 +58,9 @@ export default function Nav({ openNav, onCloseNav }) {
         '& .simplebar-content': { height: 1, display: 'flex', flexDirection: 'column' },
       }}
     >
-      <Box sx={{ px: 2.5, py: 3, display: 'inline-flex' }}>
-        <Logo />
+       <Box component={RouterLink} to="/"  style={{ textDecoration: 'none' }} sx={{ px: 2.5, py: 3, display: 'inline-flex' }}>
+    
+        <FcRadarPlot size="2em" /> <Typography color="common.black" style={{ fontSize: 25 }}>DevLin</Typography>
       </Box>
 
       <Box sx={{ mb: 5, mx: 2.5 }}>

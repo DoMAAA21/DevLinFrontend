@@ -28,12 +28,13 @@ import {
 export const allServiceReducer = (state = { services: [] }, action) => {
     switch (action.type) {
       case ALL_SERVICES_REQUEST:
-        case ADMIN_SERVICES_REQUEST:
+     
         return {
           loading: true,
           services: [],
         };
       case ALL_SERVICES_SUCCESS:
+
         return {
           ...state,
           loading: false,

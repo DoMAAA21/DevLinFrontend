@@ -10,7 +10,7 @@ const ServiceSuccess = () => {
 
 
 
-            <MetaData title={'Order Success'} />
+            <MetaData title={'Service Success'} />
 
 
 

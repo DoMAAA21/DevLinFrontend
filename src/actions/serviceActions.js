@@ -37,7 +37,7 @@ export const getAdminServices = () => async (dispatch) => {
   
         const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/admin/services`,{withCredentials: true})
 
-        console.log(data)
+        // console.log(data)
   
   
   

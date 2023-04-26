@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 // @mui
 import { styled } from '@mui/material/styles';
-import { Box, Stack, AppBar, Toolbar, IconButton } from '@mui/material';
+import { Box, Stack, AppBar, Toolbar, IconButton, Typography } from '@mui/material';
 import {  Link } from "react-router-dom";
 import { ShoppingCart } from '@mui/icons-material';
 // utils
@@ -9,7 +9,8 @@ import { bgBlur } from '../../../utils/cssStyles';
 // components
 import Iconify from '../../../components/iconify';
 import { FaShoppingCart } from 'react-icons/fa';
-
+import { FaShoppingBag } from "react-icons/fa";
+import { FaWrench } from "react-icons/fa";
 //
 import Searchbar from './Searchbar';
 import AccountPopover from './AccountPopover';
@@ -17,9 +18,10 @@ import LanguagePopover from './LanguagePopover';
 import NotificationsPopover from './NotificationsPopover';
 import Search from './Search'
 import { useDispatch, useSelector } from "react-redux";
-
+import Cart from '../cart.svg'
 import Logo from '../../../components/logo';
-
+import { FcRadarPlot } from "react-icons/fc";
+import { ImWrench } from "react-icons/im";
 // ----------------------------------------------------------------------
 
 const NAV_WIDTH = 280;
@@ -64,8 +66,8 @@ const { user, loading } = useSelector((state) => state.auth);
     <StyledRoot>
       <StyledToolbar>
 
-      <Box sx={{ px: 2.5, py: 3, display: 'inline-flex' }}>
-        <Logo />
+      <Box component={Link} to="/"  style={{ textDecoration: 'none' }} sx={{ px: 2.5, py: 3, display: 'inline-flex' }}>
+        <FcRadarPlot size="2em" /> <Typography color="common.black" style={{ fontSize: 25 }}>DevLin</Typography>
       </Box>
         <IconButton
           onClick={onOpenNav}
@@ -79,8 +81,14 @@ const { user, loading } = useSelector((state) => state.auth);
         </IconButton>
 
         <Search/>
+        <Typography color="primary" component={Link} to="/shop" style={{ textDecoration: "none" }} >Home</Typography>
+        <Box sx={{ flexGrow: 0.05 }} />
+        <Typography color="primary" component={Link} to="/services" style={{ textDecoration: "none" }} >Services</Typography>
+        <Box sx={{ flexGrow: 0.05 }} />
+        <Typography color="primary" component={Link} to="/build-a-pc" style={{ textDecoration: "none" }} >PC Builder</Typography>
         <Box sx={{ flexGrow: 1 }} />
-
+        <Box sx={{ flexGrow: 0.05 }} />
+       
         <Stack
           direction="row"
           alignItems="center"
@@ -89,34 +97,20 @@ const { user, loading } = useSelector((state) => state.auth);
             sm: 1,
           }}
         >
+          
           <Link to="/cart" style={{ textDecoration: "none" }}>
-            {/* <span id="cart" className="ml-3">
-              Cart
-            </span> */}
-            <FaShoppingCart
-            size="2em"
          
-            />
+            <FaShoppingBag/>
 
-            <span className="ml-1" id="cart_count">{cartItems.length}</span>
-           
-
-            
+            {cartItems.length}
+  
           </Link>
 
           <Link to="/servicecart" style={{ textDecoration: "none" }}>
-            {/* <span id="cart" className="ml-3">
-              Cart
-            </span> */}
-            <FaShoppingCart
-            size="2em"
-         
-            />
+            <FaWrench/>
 
-            <span className="ml-1" id="cart_count">{scartItems.length}</span>
+           {scartItems.length}
            
-
-            
           </Link>
 
           <LanguagePopover />

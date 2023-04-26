@@ -24,7 +24,7 @@ const ServicesList = () => {
     const navigate = useNavigate();
 
     const { loading, error, services } = useSelector(state => state.allservices);
-    // console.log(services)
+
 
     const { error: deleteError, isDeleted } = useSelector(state => state.service)
 
