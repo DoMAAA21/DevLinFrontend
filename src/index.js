@@ -15,7 +15,7 @@ import store from "./store";
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
-    <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_APP_API}>
+    <GoogleOAuthProvider clientId="175394507059-ns349vm9qa77nuohems8bmg1viga77e1.apps.googleusercontent.com">
     <Provider store={store}>
 
 <App />
