@@ -133,7 +133,7 @@ const Home = ({ match }) => {
               <Pagination
                 activePage={currentPage}
                 itemsCountPerPage={resPerPage}
-                totalItemsCount={productsCount}
+                totalItemsCount={servicesCount}
                 onChange={setCurrentPageNo}
                 nextPageText={"Next"}
                 prevPageText={"Prev"}

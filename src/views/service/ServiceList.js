@@ -100,7 +100,7 @@ const ServicesList = () => {
     }
 
 
-    const setProducts = () => {
+    const setServices = () => {
 
         const data = {
 
@@ -162,7 +162,7 @@ const ServicesList = () => {
 
 
 
-        services.forEach(service => {
+        services.map(service => {
 
             data.rows.push({
 
@@ -218,7 +218,7 @@ const ServicesList = () => {
 
                 <MDBDataTable
 
-                    data={setProducts()}
+                    data={setServices()}
 
                     className="table table-striped"
 
